@@ -1,0 +1,70 @@
+<div id="formulario">
+<form action="/api/sessions/signup" method="post">
+    <h1>Log in</h1>
+    <p>First Name </p>
+    <input type="text" name="first_name" id="first_name">
+    <p>Last Name </p>
+    <input type="text" name="last_name" id="last_name">
+    <p>Email</p>
+    <input type="email" name="email" id="email">
+    <p>Password</p>
+    <input type="password" name="password" id="password">
+    <input type="submit" value="Sign Up" id="button" onclick="redirectToLogin()">
+</form>
+<div class="sub-form">
+    <p>Do you already have an account?</p>
+    <button onclick="window.location.href='/views/login'">Login</button>
+    <p>Sign in with GitHub</p>
+    <button onclick="window.location.href='/api/sessions/auth/github'">GITHUB</button>
+</div>
+</div>
+<style>
+    body{
+        background-color: #292c3e;
+    }
+    form{
+        display: contents;
+    }
+
+    p, h1{
+        color: #eaff6a;
+    }
+    input{
+    }
+    button {
+        color: #eaff6a;
+        background-color: #1c1f30;
+        padding-right: 4rem;
+        padding-left: 4rem;
+        width: 100%;
+    }
+    #button{
+        margin-top: 1rem;
+        background-color: #1c1f30;
+        color: #eaff6a;
+        padding: 5px;
+    }
+    #formulario {
+        display: flex;
+        align-items: stretch;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        align-content: center;
+        border: 1px solid black;
+        margin-right: 40rem;
+        margin-left: 40rem;
+        margin-top: 4rem;
+        border-radius: 5px;
+        background-color: #1c1f30;
+        padding-bottom: 5rem;
+        padding-top: 5rem;
+        box-shadow: 5px 6px 20px 15px #888888
+}
+
+</style>
+<script>
+    function redirectToLogin() {
+        window.location.href = '/views/login';
+    }
+</script>

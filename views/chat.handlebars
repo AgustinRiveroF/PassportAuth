@@ -1,0 +1,28 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="/CSS/style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="chatContainer">
+        <div id="chat">
+            <div id="chatHeader">
+                <button id="toggleChat">Chat</button>
+            </div>
+            <div id="chatMessages"></div>
+            <div id="chatForm">
+                <input type="text" name="message" id="message" placeholder="Envia un mensaje aquí">
+                <button type="button" id="botonEnviar">Enviar</button>
+            </div>
+        </div>
+    </div>
+    <script src="/JS/chat.js"></script>
+</body>
+</html>

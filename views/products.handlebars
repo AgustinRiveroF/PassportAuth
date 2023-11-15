@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="/CSS/style.css">
+    <title>Products</title>
+</head>
+
+<body>
+    <header>
+        <h1>Products</h1>
+    </header>
+    {{#if 'admin'}}
+    <div class="admin-menu">
+        <input type="checkbox" id="admin-toggle">
+        <label for="admin-toggle">&#9776; Panel de Usuario</label>
+        <div class="admin-content">
+            <div id="infoUser">
+                <p>Bienvenido, {{user.first_name}}!</p>
+                <h4>Tus datos son:</h4>
+                <p>Nombre de Usuario: {{user.first_name}} {{user.last_name}}</p>
+                {{#if errorMessage}}
+                <p style="color: rgb(134, 235, 52);">{{loginMessage}}</p>
+                {{/if}}
+                <p>Email: {{user.email}}</p>
+                <p>Rol: {{role}}</p>
+            </div>
+            <div id="logout">
+                <a href="/views/login/">Logout</a>
+            </div>
+        </div>
+    </div>
+    {{else}}
+    <div id="user-section">
+        <h2>Panel de Usuario</h2>
+    </div>
+    {{/if}}
+    <div class="products-grid">
+        {{#each products}}
+        <div class="product-item" data-id="{{this._doc._id}}">
+            <h3>{{this._doc.product_name}}</h3>
+            <p>{{this._doc.product_description}}</p>
+            <p>${{this._doc.product_price}}</p>
+            <button class="add-to-cart" data-id="{{this._doc._id}}">Agregar</button>
+        </div>
+        {{/each}}
+    </div>
+    <div class="pagination-buttons">
+        <button id="prevPage">Anterior</button>
+        <button id="nextPage">Siguiente</button>
+    </div>
+    <div id="cart-link">
+        <a href="/api/carts/populated/6539aab0ba88a8c5ab103ec5">
+            <img src="/IMG/62392824-icono-de-carrito-de-compras-icono-de-vector-de-mejor-diseño-plano.jpg"
+                alt="Cart Image" width="50" height="50">
+        </a>
+    </div>
+    <div id="chatContainer">
+        <div id="chat">
+            <div id="chatHeader">
+                <button id="toggleChat">Chat</button>
+            </div>
+            <div id="chatMessages"></div>
+            <div id="chatForm">
+                <input type="text" name="message" id="message" placeholder="Envia un mensaje aquí">
+                <button type="button" id="botonEnviar">Enviar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/JS/chat.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const adminToggle = document.getElementById('admin-toggle');
+            const adminContent = document.querySelector('.admin-content');
+            const prevPageBtn = document.getElementById('prevPage');
+            const nextPageBtn = document.getElementById('nextPage');
+
+            adminToggle.addEventListener('change', function () {
+                adminContent.style.display = adminToggle.checked ? 'block' : 'none';
+            });
+
+            if (prevPageBtn) {
+                prevPageBtn.addEventListener('click', function () {
+                    const currentPage = parseInt("{{page}}");
+                    const prevPage = currentPage - 1;
+                    if (prevPage > 0) {
+                        window.location.href = `/api/products?page=${prevPage}`;
+                    }
+                });
+            }
+
+            if (nextPageBtn) {
+                nextPageBtn.addEventListener('click', function () {
+                    const currentPage = parseInt("{{page}}");
+                    const nextPage = currentPage + 1;
+                    window.location.href = `/api/products?page=${nextPage}`;
+                });
+            }
+        });
+    </script>
+
+
+</body>
+
+</html>

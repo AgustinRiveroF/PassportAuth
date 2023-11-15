@@ -1,0 +1,83 @@
+<div id="formulario">
+    <form action="/api/sessions/login" method="post">
+        <h1>Log in</h1>
+        <p>Email</p>
+        <input type="email" name="email" id="email" autocomplete="email">
+        <p>Password</p>
+        {{#if errorMessage}}
+        <p id="messageParagraph" style="color: red;">{{errorMessage}}</p>
+        {{/if}}
+        <input type="password" name="password" id="password">
+        <input type="submit" value="Login" id="button">
+    </form>
+    <div class="sub-form">
+        <button onclick="window.location.href='/api/sessions/auth/github'">GITHUB</button>
+        <p>Do not you have an account yet?</p>
+        <button onclick="window.location.href='/views/signup'">Check in</button>
+    </div>
+</div>
+<style>
+    body {
+        background-color: #292c3e;
+    }
+
+    form {
+        display: contents;
+    }
+
+    p,
+    h1 {
+        color: #eaff6a;
+    }
+
+    input {}
+
+    button {
+        color: #eaff6a;
+        background-color: #1c1f30;
+        padding-right: 4rem;
+        padding-left: 4rem;
+        margin-top: 1.5rem;
+        width: 100%;
+    }
+
+    #button {
+        margin-top: 1.5rem;
+        background-color: #1c1f30;
+        color: #eaff6a;
+        padding: 5px;
+    }
+
+    #formulario {
+        display: flex;
+        align-items: stretch;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        align-content: center;
+        border: 1px solid black;
+        margin-right: 40rem;
+        margin-left: 40rem;
+        margin-top: 8rem;
+        border-radius: 5px;
+        background-color: #1c1f30;
+        padding-bottom: 5rem;
+        padding-top: 5rem;
+        box-shadow: 5px 6px 20px 15px #888888;
+    }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const messageParagraph = document.getElementById('messageParagraph');
+
+        if (messageParagraph) {
+            messageParagraph.style.display = 'block';
+
+            setTimeout(function () {
+                messageParagraph.style.display = 'none';
+            }, 6000);
+        }
+    });
+</script>
+</body>
+</html>

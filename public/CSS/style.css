@@ -1,0 +1,248 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #ffff;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.products-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, auto);
+    gap: 20px;
+    margin: 20px;
+}
+
+#chatContainer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 300px;
+    height: 460px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    margin-right: 1rem;
+    border-radius: 10px;
+}
+
+#chatContainer.minimized {
+    height: 50px;
+    max-height: 50px;
+    overflow-y: hidden;
+}
+
+
+#chat {
+    flex: 1;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+    overflow-x: hidden;
+
+}
+
+#chatHeader {
+    background-color: #3498db;
+    color: #fff;
+    text-align: center;
+}
+
+#chatForm {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    bottom: 0;
+    background-color: #fff;
+    z-index: 0;
+    position: relative;
+    height: 3rem;
+    width: 18.5rem;
+}
+
+#chatMessages {
+    flex: 1;
+    overflow-y: auto;
+    max-height: calc(100% - 3rem);
+    padding: 10px;
+    margin-bottom: -1.5rem;
+    overflow: auto;
+
+}
+
+#message {
+    flex: 1;
+    height: 28px;
+    margin-right: 5px;
+}
+
+#botonEnviar {
+    height: 34px;
+    margin-right: 15px;
+}
+
+.toastify {
+    position: fixed;
+    margin-left: 25rem;
+    width: 70%;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #3498db;
+    color: #fff;
+    z-index: 1000;
+}
+
+#toggleChat {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    max-height: 5rem;
+    margin-bottom: 2rem;
+    position: sticky;
+    z-index: 7;
+    max-width: 8rem;
+    margin-top: 0.9rem;
+}
+
+#toggleChat:hover {
+    background-color: #2980b9;
+}
+
+h1{
+    text-align: center;
+}
+
+h1, h2, h3, h4, h5 {
+    color: #572a3c;
+}
+
+.products-grid {
+    margin-left: 18%;
+    margin-right: 15%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);  /* Cambiado de 3fr a 1fr para mostrar 4 columnas */
+    grid-template-rows: repeat(4, auto);    /* Agregado para mostrar 4 filas */
+    gap: 10px;
+
+}
+
+.product-item {
+    border: 1px solid #ddd;
+    padding: 15px;
+    text-align: center;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+
+.product-item:hover {
+    transform: scale(1.05);
+}
+
+#mirar-carrito {
+    position: absolute;
+    margin-top: -10%;
+    border: 1px solid #ccc;
+    padding-right: 4.5rem;
+    padding-bottom: 0rem;
+}
+
+
+
+#view-cart {
+    margin-bottom: 3rem;
+    margin-left: 5rem;
+}
+
+#admin-section,
+#mirar-carrito {
+    margin-left: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#mirar-carrito {
+    position: fixed;
+    top: 20%;
+}
+
+a {
+    text-decoration: none;
+}
+img{
+    display: flex;
+}
+
+#cart-link {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+#cart-link a {
+    text-decoration: none;
+}
+
+#cart-link img {
+    width: 50px;
+    height: 50px;
+}
+
+.admin-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #3498db;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.admin-menu label {
+    color: #fff;
+    cursor: pointer;
+}
+
+.admin-content {
+    display: none;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+#admin-toggle:checked + .admin-content {
+    display: block;
+}
+
+#admin-toggle{
+    display: none;
+}
+
+.pagination-buttons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+#nextPage{
+    margin-left: 10px;
+}

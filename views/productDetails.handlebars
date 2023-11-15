@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <link rel="stylesheet" href="/src/public/CSS/style.css">
+</head>
+<body>
+    <h1>Product Details</h1>
+    <h2>{{product.product_name}}</h2>
+    <p>Description: {{product.product_description}}</p>
+    <p>Price: ${{product.product_price}}</p>
+    <a href="/api/carts/{{product._id}}">Add to Cart</a>
+</body>
+</html>

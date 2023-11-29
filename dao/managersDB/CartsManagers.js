@@ -9,7 +9,7 @@ class CartsManager {
 
   async findCartById(idCart) {
     try {
-      const response = await cartsModel.findById(idCart);
+      const response = await cartsModel.findById(idCart).populate('products.product');
       return response; 
     } catch (error) {
       throw error;
@@ -20,7 +20,7 @@ class CartsManager {
     const cart = await cartsModel.findById(idCart);
 
     const productIndex = cart.products.findIndex(
-        (p) => p.product === idProduct
+        (p) => p.product.equals(idProduct)
     );
 
     if (productIndex === -1) {
@@ -28,22 +28,7 @@ class CartsManager {
     } else {
         cart.products[productIndex].quantity++;
     }
-
-    const consolidatedCart = {
-        _id: cart._id,
-        products: cart.products.reduce((acc, curr) => {
-            const existingProduct = acc.find((p) => p.product.toString() === curr.product.toString());
-            if (existingProduct) {
-                existingProduct.quantity += curr.quantity;
-            } else {
-                acc.push({ product: curr.product, quantity: curr.quantity });
-            }
-            return acc;
-        }, []),
-        __v: cart.__v
-    };
-
-    return cartsModel.findByIdAndUpdate(idCart, consolidatedCart, { new: true });
+    return cart.save();
 }
 
 

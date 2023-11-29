@@ -1,1 +1,8 @@
-<h2>WELCOME {{user.first_name}}</h2>
+<h2>
+    WELCOME 
+    {{#if session.user}}
+        {{session.user.first_name}}!
+    {{else}}
+        Guest!
+    {{/if}}
+</h2>

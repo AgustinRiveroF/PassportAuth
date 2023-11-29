@@ -13,26 +13,8 @@ fetch('/api/sessions/get-user')
     socketClient.emit("newUser", user);
   });
 
-socketClient.on("userConnected", (user) => {
-  Toastify({
-    text: `${user} connected`,
-    classes: "toastext",
-    duration: 5000,
-  }).showToast();
-});
-
-socketClient.on("connected", () => {
-  Toastify({
-    text: "Your are connected",
-    style: {
-      background: "linear-gradient(to right, #00b09b, #96c93d)",
-    },
-    duration: 5000,
-  }).showToast();
-});
-
 document.getElementById("botonEnviar").addEventListener("click", (e) => {
-  e.preventDefault(); //
+  e.preventDefault();
   const infoMessage = {
     name: user,
     message: inputMessage.value,
@@ -47,7 +29,7 @@ socketClient.on("chat", (messages) => {
       return `<p>${m.name}: ${m.message}</p>`;
     })
     .join(" ");
-  divChats.innerHTML += chat; 
+  divChats.innerHTML = chat; 
   divChats.scrollTop = divChats.scrollHeight;
 });
 

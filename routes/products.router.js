@@ -7,10 +7,10 @@ const router = Router();
 router.get("/", async (req, res) => {
 
     try {
-        if (!req.session.user) {
+        
+        if (!req.session.passport || !req.session.passport.user) {
             return res.redirect("/views/login");
         }
-        const userRole = req.session.user.email === "adminCoder@coder.com" ? "admin" : "usuario";
 
         const { limit = 12, page = 1, sort, query } = req.query || {};
         const options = {
@@ -38,12 +38,17 @@ router.get("/", async (req, res) => {
         const nextPage = hasNextPage ? page + 1 : null;
         const prevLink = hasPrevPage ? `/api/products?limit=${limit}&page=${prevPage}&sort=${sort}` : null;
         const nextLink = hasNextPage ? `/api/products?limit=${limit}&page=${nextPage}&sort=${sort}` : null;
+        
+        
+        const { first_name, last_name,email } = req.session.passport.user || {};
 
-        const { first_name, last_name, email } = req.session.user || {};
+        const userRole = req.session.passport.user === "adminCoder@coder.com" ? "admin" : "usuario";
+
+
         const userData = {
             first_name,
             last_name,
-            email
+            email,
         };
 
         res.render('products', {

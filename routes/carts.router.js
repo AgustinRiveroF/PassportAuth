@@ -7,33 +7,13 @@ const router = Router();
 
 // -------------------------------------- GET ------------------------------------------
 
+
 router.get("/populated/:cid", async (req, res) => {
   try {
     const { cid } = req.params;
-    const cart = await cartsModel
-      .findById(cid)
-      .populate({
-        path: "products.product",
-        model: "Product",
-        select: "product_name product_description product_price",
-      });
-
-    if (!cart) {
-      return res.status(404).json({ status: "error", message: "Cart not found" });
-    }
-
-    const cartWithStrings = JSON.parse(JSON.stringify(cart));
-    cartWithStrings._id = cart._id.toString();
-    cartWithStrings.products = cart.products.map(product => ({
-      ...JSON.parse(JSON.stringify(product)),
-      _id: product._id.toString(),
-      product: {
-        ...JSON.parse(JSON.stringify(product.product)),
-        _id: product.product._id.toString(),
-      },
-    }));
+    const cart = await cartsManager.findCartById(cid)
     
-    res.render("cartsPopulated", { cart: cartWithStrings });
+    res.render("cartsPopulated");
   } catch (error) {
     res.status(500).json({ status: "error", message: error.message });
   }
@@ -41,7 +21,7 @@ router.get("/populated/:cid", async (req, res) => {
 
 router.get("/:idCart", async (req, res) => {
   const { idCart } = req.params;
-  const cart = cartsManager.findCartById(idCart);
+  const cart = await cartsManager.findCartById(idCart);
   res.json({ cart });
 });
 
@@ -72,19 +52,9 @@ router.post("/:cid/products/:pid", async (req, res) => {
   try {
       const { cid, pid } = req.params;
 
-      const cart = await cartsModel.findById(cid);
+      const cart = await cartsManager.addProductToCart(cid, pid);
 
-      const product = await productModel.findById(pid); 
-
-      if (!cart || !product) {
-          return res.status(404).json({ status: "error", message: "Cart or product not found" });
-      }
-
-      cart.products.push({ product: product._id, quantity: 1 });
-
-      await cart.save();
-
-      res.status(200).json({ status: "success", message: "Product added to cart" });
+      res.status(200).json({ cart, message: "Product added to cart" });
   } catch (error) {
       res.status(500).json({ status: "error", message: error.message });
   }

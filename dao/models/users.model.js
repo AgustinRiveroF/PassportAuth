@@ -9,6 +9,9 @@ const usersSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    age:{
+        type: Number
+    },
     email:{
         type: String,
         required: true,
@@ -22,6 +25,20 @@ const usersSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    mycart:{
+        type: [
+            {
+                productsid:{
+                    type: mongoose.SchemaTypes.ObjectId,
+                    ref: 'Carts'
+                }
+            }
+        ]
+    },
+    role: {
+        type: String,
+        default: false,
+    } 
 });
 
 export const usersModel = mongoose.model('Users', usersSchema) 

@@ -1,10 +1,11 @@
 // passport.js
 import passport from "passport";
 import { usersManager } from "./dao/managersDB/usersManager.js";
+import { usersModel } from "./dao/models/users.model.js";
 import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as GithubStrategy } from "passport-github2";
 import { compareData, hashData } from "./utils.js";
-import { profile } from "console";
+
 
 
 // LOCAL
@@ -41,7 +42,7 @@ passport.use(
   new LocalStrategy(
     { usernameField: "email" },
     async (email, password, done) => {
-      console.log('Login strategy called');
+      console.log('1 strategy called');
       if (!email || !password) {
         return done(null, false, { message: 'Campos incorrectos' });
       }
@@ -59,6 +60,7 @@ passport.use(
 
         const isPasswordValid = await compareData(password, user.password);
         if (!isPasswordValid) {
+          console.log('5 strategy called');
           return done(null, false, { message: 'Contraseña no válida' });
         }
         let role = "usuario";
@@ -81,10 +83,13 @@ passport.use(
       clientID: "Iv1.fb6f4779cfcdb4fc",
       clientSecret: "94355f8df58f2db65aafc5a583f57400769f118c",
       callbackURL: "http://localhost:8080/api/sessions/callback",
+      scope: ["user:email"]
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        console.log('Paso 1: GitHub strategy called');
+        //console.log('Paso 1: GitHub strategy called');
+
+        //const userDB = await usersManager.findByEmail(profile.emails[0].value);
 
         const userDB = await usersManager.findByEmail(profile._json.email);
 
@@ -116,31 +121,25 @@ passport.use(
 );
 
 
+
+// SERIALIZE && DESERIALIZE
+
 passport.serializeUser((user, done) => {
   console.log('Serialize User:', user);
-  done(null, user);
+  done(null, { email: user.email, first_name: user.first_name , last_name: user.last_name , role: user.role });
 });
 
-passport.deserializeUser(async (user, done) => {
-  console.log('Deserialize User:', user);
+
+passport.deserializeUser(async (serializedUser, done) => {
+  //console.log('Deserialize User:', serializedUser);
   try {
-    const foundUser = await usersManager.findById(user._id);
+    const foundUser = await usersManager.findByEmail(serializedUser.email);
     if (!foundUser) {
       return done(null, false);
     }
 
-    if (foundUser.isGithub) {
-      return done(null, foundUser);
-    } else {
-      return done(null, foundUser);
-    }
+    return done(null, foundUser);
   } catch (error) {
     done(error);
   }
 });
-
-
-
-
-
-

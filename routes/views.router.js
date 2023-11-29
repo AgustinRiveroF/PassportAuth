@@ -3,6 +3,9 @@ import { Router } from "express";
 const router = Router()
 
 router.get("/login", (req, res) =>{
+    if(req.session.user) {
+        return res.redirect("/api/products")
+    }
     res.render("login")
 });
 
@@ -16,6 +19,7 @@ router.get("/profile", (req, res) =>{
     }
     res.render("profile",{ user: req.user })
 });
+
 
 
 export default router

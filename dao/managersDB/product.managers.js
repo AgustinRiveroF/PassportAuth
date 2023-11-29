@@ -1,4 +1,5 @@
 import { productModel } from "../models/product.model.js";
+import mongoosePaginate from 'mongoose-paginate-v2';
 
 class ProductManager {
     async findAll(options = {}) {
@@ -20,6 +21,32 @@ class ProductManager {
             throw error;
         }
     }
+
+   /*  async findAll(obj) {
+        const { limit, page } = obj;
+
+        const options = {
+            limit,
+            page,
+        };
+
+        try {
+            const result = await productModel.paginate({}, options);
+            
+            const info = {
+                count: result.totalDocs,
+                pages: result.totalPages,
+                next: result.hasNextPage ? `http://localhost:8080/api/products?page=${result.nextPage}` : null,
+                prev: result.hasPrevPage ? `http://localhost:8080/api/products?page=${result.prevPage}` : null,
+            };
+
+            const results = result.docs;
+
+            return { info, results };
+        } catch (error) {
+            throw new Error(`Error retrieving products: ${error.message}`);
+        }
+    } */
 
     async createOne(obj) {
         try {

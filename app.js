@@ -60,8 +60,8 @@ app.use(
     }),
     secret: "secretSession",
     cookie: { maxAge: 900000 },
-    resave: true,
-    saveUninitialized: true,
+    resave: false,
+    saveUninitialized: false,
   })
 );
 
@@ -93,17 +93,24 @@ app.engine("handlebars", engine());
 // 
 
 app.use("/api/products", (req, res, next) => {
-  if (!req.session || !req.session.user) {
+  if (!req.session || !req.session.passport || !req.session.passport.user) {
     return res.redirect("/views/login");
   }
   next();
-})
+});
+
+const authenticateUser = (req, res, next) => {
+  if (req.isAuthenticated()) {
+      return next();
+  }
+  res.redirect("/views/login"); // Redirige al usuario a la página de inicio de sesión si no está autenticado
+};
 
 
 // Rutas para el back
-
+  
 // Ruta productos
-app.use("/api/products", productsRouter);
+app.use("/api/products", authenticateUser , productsRouter);
 
 // Ruta para carritos
 app.use('/api/carts', carritosRouter);
